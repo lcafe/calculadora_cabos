@@ -1,7 +1,7 @@
 
 # Calculadora de Cabos
 
-Essa calculadora é uma ferramenta CLI que faz parte de um projeto maior que estou trabalhando, ela será liberada de forma livre sobre a licensa [GPL-3.0](https://github.com/lcafe/calculadora_cabos/tree/main?tab=GPL-3.0-1-ov-file#readme).
+Essa calculadora é uma ferramenta CLI que faz parte de um projeto maior que estou trabalhando, ela será liberada de forma livre sobre a licença [GPL-3.0](https://github.com/lcafe/calculadora_cabos/tree/main?tab=GPL-3.0-1-ov-file#readme).
 
 
 
