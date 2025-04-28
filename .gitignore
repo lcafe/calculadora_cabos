@@ -5,4 +5,6 @@ node_modules/
 .idea/
 .DS_Store
 Thumbs.db
-validators/tests/
+validators/
+tests/
+app.js
