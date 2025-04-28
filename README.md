@@ -80,15 +80,31 @@ Entre no diretório do projeto
   cd calculadora_cabos
 ```
 
-Instale as dependências (AINDA NÃO É NECESSÁRIO)
+
+## Como usar a ferramenta CLI
+
+Instale as dependências
 
 ```bash
   npm install
 ```
 
-## Como usar a ferramenta CLI
+Execute a ferramenta CLI
+```bash
+  npm run cli
+```
 
-**EM CONSTRUÇÃO**
+Ao executar a ferramenta, você vai ver esta tela, é possível mover com as setas direcionais do teclado e selecionar com a tecla Enter.
+
+**Menu Principal**
+![image](https://github.com/user-attachments/assets/7fa61b56-c682-43a2-bf73-2355479e7485)
+
+**Sair**
+![image](https://github.com/user-attachments/assets/00bc32b4-27dd-4619-be00-3f381852e6be)
+
+**Executando um tipo de cálculo**
+![image](https://github.com/user-attachments/assets/abab1157-c718-4e0f-95ef-997716c9e62c)
+
 
 ##  Como usar os cálculos no seu projeto
 
