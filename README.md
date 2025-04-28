@@ -26,8 +26,9 @@ Essa calculadora é uma ferramenta CLI que faz parte de um projeto maior que est
 | **Corrente de Projeto**           | Ib = P / (Vff × FP)                       | Corrente de projeto bifásica      |
 | **Corrente de Projeto**           |  Ib = P / (√3 × Vff × FP)                      | Corrente de projeto trifásica         |
 | **Corrente Corrigida**            | Ib' = Ib / (k1 × k2 × k3)                                                                        | Corrente corrigida pelos fatores de correção       |
-| **Queda de Tensão**               | ΔVc = [2 × Ib × L × (R × FP + X × √(1 - FP²))] / (1000 × Ncp × V) × 100 | Queda de tensão em % (mono/bifásico)                |
-| **Queda de Tensão**        | ΔVc = [√3 × Ib × L × (R × FP + X × √(1 - FP²))] / (1000 × Ncp × V) × 100 | Queda de tensão em % (trifásico)                |
+| **Queda de Tensão**               | ΔVc = [2 × Ib × L × (R × FP + X × √(1 - FP²))] / (1000 × Ncp × Vfn) × 100 | Queda de tensão em % (monofásico)               |
+| **Queda de Tensão**               | ΔVc = [2 × Ib × L × (R × FP + X × √(1 - FP²))] / (1000 × Ncp × Vff) × 100 | Queda de tensão em % (bifásico)                |
+| **Queda de Tensão**        | ΔVc = [√3 × Ib × L × (R × FP + X × √(1 - FP²))] / (1000 × Ncp × Vff) × 100 | Queda de tensão em % (trifásico)                |
 | **Queda de Tensão Motor (Partida)**| ΔVm = [√3 × Ip × L × (R × 0.3)] / (Ncp × Vff × 1000) × 100                                      | Queda de tensão na partida de motores (%)          |
 | **Corrente Nominal Disjuntor**    | I2 = Ib × k4                                                           | Corrente mínima do disjuntor                       |
 | **Sobrecarga - Critério A**                    | Ib ≤ Ins ≤ Iz                              | Critérios de sobrecarga                           
@@ -94,8 +95,10 @@ Instale as dependências (AINDA NÃO É NECESSÁRIO)
 Importe a função desejada:
 
 ```javascript
-const { correnteProjeto } = require('./lib/correnteDeProjeto');
+const { correnteProjeto } = require('./{caminho}/lib/correnteDeProjeto');
 ```
+
+Sendo **{caminho}** o diretório origem de onde seu programa está acessando. 
 
 Chame a função com os parâmetros necessários:
 
