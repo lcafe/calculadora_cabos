@@ -15,7 +15,8 @@ module.exports = async function calcularQuedaTensao() {
     { name: "X", message: "Reatância do condutor (mΩ/m):", validate: v => !isNaN(v) && v >= 0 },
     { name: "FP", message: "Fator de potência (0 < FP ≤ 1):", validate: v => !isNaN(v) && v > 0 && v <= 1 },
     { name: "Ncp", message: "Número de cabos em paralelo por fase:", validate: v => !isNaN(v) && v > 0 },
-    { name: "V", message: "Tensão (Vfn para 1 fase, Vff para 2 ou 3 fases):", validate: v => !isNaN(v) && v > 0 }
+    { name: "V", message: "Tensão (Vfn para 1 fase, Vff para 2 ou 3 fases):", validate: v => !isNaN(v) && v > 0 },
+    { name: "deltaVcSetPoint", message: "Valor do queda de tensão desejado:", validate: v => !isNaN(v) && v > 0 }
   ]);
 
   // 2. Resumo dos inputs
@@ -28,6 +29,7 @@ module.exports = async function calcularQuedaTensao() {
   console.log(`- Fator de potência (FP): ${respostas.FP}`);
   console.log(`- Número de cabos em paralelo por fase (Ncp): ${respostas.Ncp}`);
   console.log(`- Tensão (V): ${respostas.V} V`);
+  console.log(`- Valor do queda de tensão desejado (deltaVcSetPoint): ${respostas.deltaVcSetPoint} %`);
   const { confirmar } = await inquirer.prompt([
     { type: "confirm", name: "confirmar", message: "Deseja prosseguir com o cálculo?", default: true }
   ]);
@@ -44,7 +46,7 @@ module.exports = async function calcularQuedaTensao() {
     Number(respostas.Ncp),
     Number(respostas.V)
   );
-  const status = testeQuedaDeTensao(deltaVc);
+  const status = testeQuedaDeTensao(deltaVc, Number(respostas.deltaVcSetPoint));
 
   console.log(chalk.greenBright(`\nQueda de tensão: ${deltaVc.toFixed(3)} %`));
   console.log(chalk.yellow(`Status: ${status}\n`));

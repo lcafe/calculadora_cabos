@@ -8,7 +8,6 @@ const calcularCorrenteProjeto = require("./calculos/correnteProjeto");
 const calcularCorrenteCorrigida = require("./calculos/correnteCorrigida");
 const calcularQuedaTensao = require("./calculos/quedaTensao");
 const calcularQuedaTensaoMotor = require("./calculos/quedaTensaoMotor");
-const calcularCorrenteDisjuntor = require("./calculos/correnteDisjuntor");
 const calcularSobrecarga = require("./calculos/sobrecarga");
 const calcularCurtoCircuito = require("./calculos/curtoCircuito");
 
@@ -45,7 +44,6 @@ async function mainMenu() {
         { name: "Corrente corrigida", value: "correnteCorrigida" },
         { name: "Queda de tensão", value: "quedaTensao" },
         { name: "Queda de tensão motor (partida)", value: "quedaTensaoMotor" },
-        { name: "Corrente nominal mínima do disjuntor", value: "correnteDisjuntor" },
         { name: "Critério de sobrecarga", value: "sobrecarga" },
         { name: "Critério de curto-circuito", value: "curtoCircuito" },
         new inquirer.Separator(),
@@ -67,9 +65,6 @@ async function mainMenu() {
       break;
     case "quedaTensaoMotor":
       await calcularQuedaTensaoMotor();
-      break;
-    case "correnteDisjuntor":
-      await calcularCorrenteDisjuntor();
       break;
     case "sobrecarga":
       await calcularSobrecarga();

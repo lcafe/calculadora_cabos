@@ -5,14 +5,17 @@
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node server.js",
-    "cli": "node ./cli/cli.js"
+    "start:backend": "node server/index.js",
+    "start:cli": "node ./cli/cli.js"
   },
   "dependencies": {
     "chalk": "^5.0.0",
     "dayjs": "^1.11.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
     "figlet": "^1.5.2",
-    "inquirer": "^9.0.0"
+    "inquirer": "^9.0.0",
+    "sqlite3": "^5.1.7"
   },
   "keywords": [],
   "author": "lcafe",
