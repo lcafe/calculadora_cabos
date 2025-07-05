@@ -5,7 +5,6 @@ const path = require("path");
 const { criterioCurtoCircuito, energiaCurtoCircuito, capacidadeCabo} = require("../../lib/curtoCircuito");
 
 module.exports = async function calcularCurtoCircuito() {
-  // 1. Perguntar os parâmetros
   const respostas = await inquirer.prompt([
     { name: "I", message: "Corrente de curto-circuito no barramento (I) em A:", validate: v => !isNaN(v) && v >= 0 },
     { name: "t", message: "Tempo de eliminação de defeito (t) em s:", validate: v => !isNaN(v) && v >= 0 },
@@ -13,7 +12,6 @@ module.exports = async function calcularCurtoCircuito() {
     { name: "S", message: "Seção do cabo (S) em mm²:", validate: v => !isNaN(v) && v > 0 }
   ]);
 
-  // 2. Resumo dos inputs
   console.log(chalk.blue("\nResumo dos dados informados:"));
   console.log(`- Corrente de curto-circuito (I): ${respostas.I} A`);
   console.log(`- Tempo de eliminação de defeito (t): ${respostas.t} s`);
@@ -29,7 +27,6 @@ module.exports = async function calcularCurtoCircuito() {
   const K = Number(respostas.K);
   const S = Number(respostas.S);
 
-  // 3. Executar cálculo
   const status = criterioCurtoCircuito(I, t, K, S);
   const energiaCurto = energiaCurtoCircuito(I, t).toLocaleString();
   const capacidadeEnergiaCabo = capacidadeCabo(K, S).toLocaleString();
@@ -38,8 +35,6 @@ module.exports = async function calcularCurtoCircuito() {
   console.log(chalk.blue(`I² × t = ${energiaCurto} A².s`));
   console.log(chalk.blue(`K² × S² = ${capacidadeEnergiaCabo} A².s\n`));
 
-
-  // 4. Salvar resultado (opcional)
   const { salvar } = await inquirer.prompt([
     { type: "confirm", name: "salvar", message: "Deseja salvar este resultado em um arquivo texto?", default: false }
   ]);

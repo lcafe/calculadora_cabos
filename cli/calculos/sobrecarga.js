@@ -5,39 +5,32 @@ const path = require("path");
 const { criterioSobrecarga } = require("../../lib/criterioSobrecarga");
 
 module.exports = async function calcularSobrecarga() {
-  // 1. Perguntar os parâmetros
   const respostas = await inquirer.prompt([
     { name: "Ib", message: "Corrente de projeto (Ib) em A:", validate: v => !isNaN(v) && v > 0 },
     { name: "Ins", message: "Corrente nominal do disjuntor (Ins) em A:", validate: v => !isNaN(v) && v > 0 },
     { name: "Iz", message: "Corrente máxima do cabo (Iz) em A:", validate: v => !isNaN(v) && v > 0 },
-    { name: "I2", message: "Corrente de projeto corrigida pelo fator de sobrecarga (I2) em A:", validate: v => !isNaN(v) && v > 0 },
     { name: "condCemHoras", message: "É garantido que a temperatura limite de sobrecarga nos condutores não virá a ser mantida por um tempo superior a 100 horas durante 12 meses consecutivos ou 500 horas durante sua vida útil?", type: "confirm", default: true }
   ]);
 
-  // 2. Resumo dos inputs
   console.log(chalk.blue("\nResumo dos dados informados:"));
   console.log(`- Corrente de projeto (Ib): ${respostas.Ib} A`);
   console.log(`- Corrente nominal do disjuntor (Ins): ${respostas.Ins} A`);
   console.log(`- Corrente máxima do cabo (Iz): ${respostas.Iz} A`);
-  console.log(`- Corrente convencional de atuação para disjuntores (I2): ${respostas.I2} A`);
   console.log(`- Garantido que a temperatura limite de sobrecarga nos condutores não virá a ser mantida por um tempo superior a 100 horas durante 12 meses consecutivos ou 500 horas durante sua vida útil: ${respostas.condCemHoras}`);
   const { confirmar } = await inquirer.prompt([
     { type: "confirm", name: "confirmar", message: "Deseja prosseguir com o cálculo?", default: true }
   ]);
   if (!confirmar) return;
 
-  // 3. Executar cálculo
   const status = criterioSobrecarga(
     Number(respostas.Ib),
     Number(respostas.Ins),
     Number(respostas.Iz),
-    Number(respostas.I2),
     respostas.condCemHoras
   );
 
   console.log(chalk.greenBright(`\nStatus do critério de sobrecarga: ${status}\n`));
 
-  // 4. Salvar resultado (opcional)
   const { salvar } = await inquirer.prompt([
     { type: "confirm", name: "salvar", message: "Deseja salvar este resultado em um arquivo texto?", default: false }
   ]);
@@ -52,7 +45,6 @@ module.exports = async function calcularSobrecarga() {
       `Corrente de projeto (Ib): ${respostas.Ib} A`,
       `Corrente nominal do disjuntor (Ins): ${respostas.Ins} A`,
       `Corrente máxima do cabo (Iz): ${respostas.Iz} A`,
-      `Corrente corrigida pelo fator de sobrecarga (I2): ${respostas.I2} A`,
       `Garantido que a temperatura limite de sobrecarga nos condutores não virá a ser mantida por um tempo superior a 100 horas durante 12 meses consecutivos ou 500 horas durante sua vida útil: ${respostas.condCemHoras}`,
       `Status do critério de sobrecarga: ${status}`
     ].join("\n");

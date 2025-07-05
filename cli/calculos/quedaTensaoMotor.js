@@ -6,7 +6,6 @@ const { quedaDeTensaoMotor } = require("../../lib/quedaDeTensaoMotor");
 const { testeQuedaDeTensaoMotor } = require("../../lib/testeQuedaDeTensaoMotor");
 
 module.exports = async function calcularQuedaTensaoMotor() {
-  // 1. Perguntar os parâmetros
   const respostas = await inquirer.prompt([
     { name: "Ip", message: "Corrente de partida do motor (A):", validate: v => !isNaN(v) && v > 0 },
     { name: "L", message: "Comprimento do circuito (m):", validate: v => !isNaN(v) && v > 0 },
@@ -15,7 +14,6 @@ module.exports = async function calcularQuedaTensaoMotor() {
     { name: "Vff", message: "Tensão fase-fase (V):", validate: v => !isNaN(v) && v > 0 }
   ]);
 
-  // 2. Resumo dos inputs
   console.log(chalk.blue("\nResumo dos dados informados:"));
   console.log(`- Corrente de partida do motor (Ip): ${respostas.Ip} A`);
   console.log(`- Comprimento do circuito (L): ${respostas.L} m`);
@@ -27,7 +25,6 @@ module.exports = async function calcularQuedaTensaoMotor() {
   ]);
   if (!confirmar) return;
 
-  // 3. Executar cálculo
   const deltaVm = quedaDeTensaoMotor(
     Number(respostas.Ip),
     Number(respostas.L),
@@ -40,7 +37,6 @@ module.exports = async function calcularQuedaTensaoMotor() {
   console.log(chalk.greenBright(`\nQueda de tensão na partida: ${deltaVm.toFixed(3)} %`));
   console.log(chalk.yellow(`Status: ${status}\n`));
 
-  // 4. Salvar resultado (opcional)
   const { salvar } = await inquirer.prompt([
     { type: "confirm", name: "salvar", message: "Deseja salvar este resultado em um arquivo texto?", default: false }
   ]);

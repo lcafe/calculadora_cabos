@@ -6,7 +6,6 @@ const { quedaDeTensao } = require("../../lib/quedaDeTensao");
 const { testeQuedaDeTensao } = require("../../lib/testeQuedaDeTensao");
 
 module.exports = async function calcularQuedaTensao() {
-  // 1. Perguntar os parâmetros
   const respostas = await inquirer.prompt([
     { name: "fases", message: "Número de fases (1, 2 ou 3):", validate: v => [1,2,3].includes(Number(v)) },
     { name: "Ib", message: "Corrente de projeto (A):", validate: v => !isNaN(v) && v > 0 },
@@ -19,7 +18,6 @@ module.exports = async function calcularQuedaTensao() {
     { name: "deltaVcSetPoint", message: "Valor do queda de tensão desejado:", validate: v => !isNaN(v) && v > 0 }
   ]);
 
-  // 2. Resumo dos inputs
   console.log(chalk.blue("\nResumo dos dados informados:"));
   console.log(`- Número de fases: ${respostas.fases}`);
   console.log(`- Corrente de projeto (Ib): ${respostas.Ib} A`);
@@ -35,7 +33,6 @@ module.exports = async function calcularQuedaTensao() {
   ]);
   if (!confirmar) return;
 
-  // 3. Executar cálculo
   const deltaVc = quedaDeTensao(
     Number(respostas.fases),
     Number(respostas.Ib),
@@ -51,7 +48,6 @@ module.exports = async function calcularQuedaTensao() {
   console.log(chalk.greenBright(`\nQueda de tensão: ${deltaVc.toFixed(3)} %`));
   console.log(chalk.yellow(`Status: ${status}\n`));
 
-  // 4. Salvar resultado
   const { salvar } = await inquirer.prompt([
     { type: "confirm", name: "salvar", message: "Deseja salvar este resultado em um arquivo texto?", default: false }
   ]);
