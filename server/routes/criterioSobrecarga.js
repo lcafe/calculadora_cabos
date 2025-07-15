@@ -8,20 +8,22 @@ const { criterioSobrecarga } = require('../../lib/criterioSobrecarga');
 router.post('/criterio-sobrecarga', (req, res) => {
   const { Ib, Ins, Iz, I2, condCemHoras } = req.body;
 
+  const condCemHorasNum = Number(condCemHoras);
+
   if (
     typeof Ib !== 'number' ||
     typeof Ins !== 'number' ||
     typeof Iz !== 'number' ||
-    typeof I2 !== 'number' ||
-    typeof condCemHoras !== 'boolean'
+    isNaN(condCemHorasNum) ||
+    (condCemHorasNum !== 0 && condCemHorasNum !== 1)
   ) {
     return res.status(400).json({
-      erro: 'Parâmetros inválidos. Envie Ib, Ins, Iz, I2 (números) e condCemHoras (booleano).'
+      erro: 'Parâmetros inválidos. Envie Ib, Ins, Iz e condCemHoras (números).'
     });
   }
 
   try {
-    const resultado = criterioSobrecarga(Ib, Ins, Iz, I2, condCemHoras);
+    const resultado = criterioSobrecarga(Ib, Ins, Iz, condCemHorasNum);
     return res.json({
       resultado
     });
@@ -33,3 +35,4 @@ router.post('/criterio-sobrecarga', (req, res) => {
 });
 
 module.exports = router;
+
