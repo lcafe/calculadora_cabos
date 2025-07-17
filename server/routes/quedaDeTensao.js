@@ -13,7 +13,6 @@ router.post('/queda-tensao', (req, res) => {
     R,
     X,
     FP,
-    Ncp,
     V,
     deltaVcSetPoint
   } = req.body;
@@ -25,17 +24,16 @@ router.post('/queda-tensao', (req, res) => {
     typeof R !== 'number' ||
     typeof X !== 'number' ||
     typeof FP !== 'number' ||
-    typeof Ncp !== 'number' ||
     typeof V !== 'number' ||
     typeof deltaVcSetPoint !== 'number'
   ) {
     return res.status(400).json({
-      erro: 'Parâmetros inválidos. Envie fases, Ib, L, R, X, FP, Ncp, V e deltaVcSetPoint como números.'
+      erro: 'Parâmetros inválidos. Envie fases, Ib, L, R, X, FP, V e deltaVcSetPoint como números.'
     });
   }
 
   try {
-    const deltaVc = quedaDeTensao(fases, Ib, L, R, X, FP, Ncp, V);
+    const deltaVc = quedaDeTensao(fases, Ib, L, R, X, FP, V);
     const status = testeQuedaDeTensao(deltaVc, deltaVcSetPoint);
 
     return res.json({

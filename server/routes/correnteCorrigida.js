@@ -12,17 +12,16 @@ router.post('/corrente-corrigida', (req, res) => {
     typeof k1 !== 'number' ||
     typeof k2 !== 'number' ||
     typeof k3 !== 'number' ||
-    typeof ncp !== 'number' ||
     typeof tipoCarga !== 'string' ||
     (tipoCarga === 'motorica' && (typeof fatorDeServico !== 'number' || fatorDeServico <= 0))
   ) {
     return res.status(400).json({
-      erro: 'Parâmetros inválidos. Envie Ib, k1, k2, k3, ncp (números), tipoCarga (string) e fatorDeServico (número, obrigatório para motorica).'
+      erro: 'Parâmetros inválidos. Envie Ib, k1, k2, k3, tipoCarga (string) e fatorDeServico (número, obrigatório para motorica).'
     });
   }
 
   try {
-    const resultado = correnteCorrigida(Ib, k1, k2, k3, ncp, tipoCarga, fatorDeServico);
+    const resultado = correnteCorrigida(Ib, k1, k2, k3, tipoCarga, fatorDeServico);
     return res.json({
       corrente_corrigida: resultado
     });

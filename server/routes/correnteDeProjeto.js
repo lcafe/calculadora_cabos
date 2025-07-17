@@ -9,7 +9,7 @@ router.post('/corrente-projeto', (req, res) => {
   // LOG do corpo recebido
   console.log('[corrente-projeto] REQ BODY:', JSON.stringify(req.body));
 
-  const { fases, P, V, FP, rendimento, tipoCarga, instalacaoIndustrial, fatorDeDemanda } = req.body;
+  const { fases, P, V, FP, rendimento, tipoCarga, instalacaoIndustrial, fatorDeDemanda, numeroCabosPorFase, tipoCorrente } = req.body;
 
   // Validação dos parâmetros
   if (
@@ -20,16 +20,18 @@ router.post('/corrente-projeto', (req, res) => {
     typeof rendimento !== 'number' ||
     typeof tipoCarga !== 'string' ||
     typeof instalacaoIndustrial !== 'boolean' ||
-    typeof fatorDeDemanda !== 'number'
+    typeof fatorDeDemanda !== 'number' ||
+    typeof numeroCabosPorFase !== 'number' ||
+    typeof tipoCorrente !== 'string'
   ) {
     console.error('[corrente-projeto] ERRO: Parâmetros inválidos', req.body);
     return res.status(400).json({
-      erro: 'Parâmetros inválidos. Envie fases, P, V, FP, rendimento (número), tipoCarga (string), instalacaoIndustrial (boolean) e fatorDeDemanda (número).'
+      erro: 'Parâmetros inválidos. Envie fases, P, V, FP, rendimento (número), tipoCarga (string), instalacaoIndustrial (boolean), fatorDeDemanda (número), numeroCabosPorFase (número) e tipoCorrente (string).'
     });
   }
 
   try {
-    const resultado = correnteProjeto(fases, P, V, FP, rendimento, tipoCarga, instalacaoIndustrial, fatorDeDemanda);
+    const resultado = correnteProjeto(fases, P, V, FP, rendimento, tipoCarga, instalacaoIndustrial, fatorDeDemanda, numeroCabosPorFase, tipoCorrente);
     console.log('[corrente-projeto] RESPOSTA:', resultado);
     return res.json({
       corrente_projeto: resultado

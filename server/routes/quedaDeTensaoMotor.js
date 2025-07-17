@@ -7,22 +7,21 @@ const { testeQuedaDeTensaoMotor } = require('../../lib/testeQuedaDeTensaoMotor')
 
 // Rota POST para calcular e testar a queda de tensão motórica trifásica
 router.post('/queda-tensao-motorica', (req, res) => {
-  const { Ip, L, R, Ncp, Vff } = req.body;
+  const { Ip, L, R, Vff } = req.body;
 
   if (
     typeof Ip !== 'number' ||
     typeof L !== 'number' ||
     typeof R !== 'number' ||
-    typeof Ncp !== 'number' ||
     typeof Vff !== 'number'
   ) {
     return res.status(400).json({
-      erro: 'Parâmetros inválidos. Envie Ip, L, R, Ncp e Vff como números.'
+      erro: 'Parâmetros inválidos. Envie Ip, L, R e Vff como números.'
     });
   }
 
   try {
-    const deltaVm = quedaDeTensaoMotor(Ip, L, R, Ncp, Vff);
+    const deltaVm = quedaDeTensaoMotor(Ip, L, R, Vff);
     const status = testeQuedaDeTensaoMotor(deltaVm);
 
     return res.json({
